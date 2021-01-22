@@ -21,7 +21,7 @@ function getSelectedGame(gameType) {
         minWinnerCheckMove = 10;
     }
 
-    startGame();
+    new Game(parseInt(totalRow), maxMove, minWinnerCheckMove).start();
 }
 
 function getGameInstance() {
