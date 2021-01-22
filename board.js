@@ -1,12 +1,8 @@
 var boxCollection = [];
 var moveMadeCount = 0;
-var minWinnerCheckMove = 4;
 var winner = document.querySelector('.winner');
 var winnerName = winner.querySelector('.winnerName');
 var draw = document.querySelector('.draw');
-
-var maxMove = 9;
-var rowCount = 3;
 
 class Box {
     constructor(rowCount) {
@@ -35,7 +31,7 @@ class Box {
     }
 
     handleClick() {
-        let player = new Player();
+        let player = new Player(this.rowCount);
         player.getSign();
 
         this.checked = true;
@@ -53,6 +49,7 @@ class Box {
 }
 
 class View {
+    // toggle turn to show whose turn is next
     togglePlayerActiveTurn(showPlayer, hidePlayer) {
         let activePlayer = showPlayer.querySelector('.activeCircle');
         let waitingPlayer = hidePlayer.querySelector('.activeCircle');
@@ -81,7 +78,6 @@ class View {
     }
 
     // make the boxes as checked so that they can not be clicked
-
     checkRemainingBoxes() {
         boxCollection.forEach(function (box) {
             box.checked = !box.checked ? true : false
@@ -135,6 +131,8 @@ class Player {
         this.win = false;
         this.playerOne = document.querySelector('.playerOne');
         this.playerTwo = document.querySelector('.playerTwo');
+        this.minWinnerCheckMove = getGameInstance().minWinnerCheckMove;
+        this.totalRow = getGameInstance().totalRow;
     }
 
     getSign() {
@@ -151,7 +149,7 @@ class Player {
     isWinner() {
         let resetGame = false;
         let view = new View();
-        if (moveMadeCount > minWinnerCheckMove) {
+        if (moveMadeCount > this.minWinnerCheckMove) {
             this.checkWinningPattern();
 
             if (!this.win && moveMadeCount == maxMove) {
@@ -171,7 +169,7 @@ class Player {
         for (let pattern of winningPattern) {
             let sameElement = false;
             let initialElement = boxCollection[pattern[0]].boxObject.innerHTML;
-            for (let i = 1; i < 3; i++) {
+            for (let i = 1; i < this.totalRow; i++) {
                 let nextElement = boxCollection[pattern[i]].boxObject.innerHTML;
                 if (initialElement == nextElement && initialElement != "") {
                     sameElement = true;
@@ -196,14 +194,17 @@ class Player {
 }
 
 function startGame() {
-    let board = new Board(3);
+    let totalRow = getGameInstance().totalRow;
+    clearBoard();
+    let board = new Board(totalRow);
     board.render();
 
     let pattern = new Pattern();
     pattern.getWinningPattern();
 }
 
-startGame();
-
-
-
+function clearBoard() {
+    let board = document.querySelector('.board');
+    console.log(board);
+    board.removeChild();
+}
