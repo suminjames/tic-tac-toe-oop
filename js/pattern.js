@@ -64,6 +64,6 @@ class Pattern {
         winningPattern = this.getHorizontalPattern().concat(this.getVerticalPattern());
         winningPattern.push(this.getLeftDiagonalPattern());
         winningPattern.push(this.getRightDiagonalPattern());
-        console.log(winningPattern)
+        // console.log(winningPattern)
     }
 }

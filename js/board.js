@@ -1,5 +1,5 @@
-var boxCollection = [];
-var moveMadeCount = 0;
+var boxCollection;
+var moveMadeCount;
 
 class Box {
     constructor(rowCount) {
@@ -10,7 +10,6 @@ class Box {
     }
 
     render() {
-        let thisBox = this;
         let box = document.querySelector('.box');
         this.boxObject = box.cloneNode(true);
         this.boxObject.classList.remove('d-none');
@@ -18,19 +17,9 @@ class Box {
         boxCollection.push(this);
 
         this.boardRow.appendChild(this.boxObject);
-
-        this.boxObject.addEventListener('click', function (e) {
-            if (!thisBox.checked) {
-                e.stopPropagation();
-                thisBox.handleClick();
-            }
-        });
     }
 
-    handleClick() {
-        let player = new Player(this.rowCount);
-        player.getSign();
-
+    handleClick(player) {
         this.checked = true;
         this.boxObject.innerHTML = player.move;
         moveMadeCount += 1;
@@ -41,7 +30,7 @@ class Box {
             return false;
         }
 
-        player.getSign();
+        player.changeTurn();
     }
 }
 
@@ -83,6 +72,20 @@ class Board {
         this.board.querySelectorAll('.boardRow.d-flex').forEach(function (boxRow) {
             boxRow.innerHTML = ""
         });
+        boxCollection = [];
+        moveMadeCount = 0;
+
+        if (!winner.classList.contains('d-none')) {
+            winner.classList.add('d-none');
+        }
+
+        if (!draw.classList.contains('d-none')) {
+            draw.classList.add('d-none');
+        }
+
+        if (!retryBtn.classList.contains('d-none')) {
+            retryBtn.classList.add('d-none');
+        }
     }
 
 }

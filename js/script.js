@@ -1,5 +1,10 @@
 let selectGameType = document.querySelector('.selectGameType');
 
+var winner = document.querySelector('.winner');
+var winnerName = winner.querySelector('.winnerName');
+var draw = document.querySelector('.draw');
+var retryBtn = document.querySelector('.retryBtn');
+
 getSelectedGame(selectGameType.value);
 
 selectGameType.addEventListener('change', function () {

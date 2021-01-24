@@ -1,7 +1,3 @@
-var winner = document.querySelector('.winner');
-var winnerName = winner.querySelector('.winnerName');
-var draw = document.querySelector('.draw');
-
 class Player {
     constructor() {
         this.move;
@@ -16,8 +12,10 @@ class Player {
         this.maxMove = getGameInstance().maxMove;
     }
 
-    getSign() {
+    // change player turn after move made
+    changeTurn() {
         let view = new View();
+
         if (moveMadeCount % 2 == 0) {
             this.move = 'X';
             view.togglePlayerActiveTurn(this.playerOne, this.playerTwo);
@@ -27,9 +25,9 @@ class Player {
         }
     }
 
+    // to check if the player win
     isWinner() {
         let resetGame = false;
-        let view = new View();
         if (moveMadeCount > this.minWinnerCheckMove) {
             this.checkWinningPattern();
 
@@ -38,6 +36,7 @@ class Player {
                 resetGame = true;
             } else if (this.win) {
                 this.declareWinner();
+                let view = new View();
                 view.checkRemainingBoxes();
                 resetGame = true;
             }

@@ -10,8 +10,11 @@ class View {
     }
 
     // show retry button
-    showRetryButton(retryBtn) {
+    showRetryButton() {
         retryBtn.classList.remove('d-none');
+        retryBtn.addEventListener('click', function () {
+            getGameInstance().start();
+        })
     }
 
     // remove active circle or player turn circle after game is completed
@@ -22,15 +25,14 @@ class View {
     }
 
     render() {
-        let retryBtn = document.querySelector('.retryBtn');
-        this.showRetryButton(retryBtn);
+        this.showRetryButton();
         this.removeActiveStatus();
     }
 
     // make the boxes as checked so that they can not be clicked
     checkRemainingBoxes() {
         boxCollection.forEach(function (box) {
-            box.checked = !box.checked ? true : false
+            box.checked = true
         });
     }
 
