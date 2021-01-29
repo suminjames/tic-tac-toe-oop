@@ -19,12 +19,7 @@ var minWinnerCheckMove;
 function getSelectedGame(gameType) {
     totalRow = gameType;
     maxMove = totalRow * totalRow;
-
-    if (gameType == 3) {
-        minWinnerCheckMove = 4;
-    } else if (gameType == 6) {
-        minWinnerCheckMove = 10;
-    }
+    minWinnerCheckMove = (2 * totalRow) - 2;
 
     new Game(parseInt(totalRow), maxMove, minWinnerCheckMove).start();
 }
